@@ -1,6 +1,8 @@
 # Next-steps in Rust
 
-#### Panic 
+## Errores Irrecuperables
+
+### Panic 
 
 Para controlar errores en Rust lo más sencillo es usar ```panic!```
 
@@ -11,7 +13,7 @@ Panic se puede llamar de forma manual o puede ser llamado por el programa debido
 Panic es sobre todo usado cuando el estado del programa es irrecuperable.
 
 
-#### ```Option<T>``` (o ```null```) o 
+### ```Option<T>``` (o ```null```)
 
 En otros lenguajes existen o ```null``` o ```nil```, pero en Rust solo existe ```Option<T>```.
 
@@ -120,3 +122,29 @@ No hay colores en el universo! :(
 Esto se debe a que ```match``` se ejecuta de arriba para abajo y al encontrar la coincidencia el match pasa al siguiente valor.
 
 También se debe recordar que los casos específicos cómo el del ejemplo y el color "naranja" se deben declarar primero, y luego se declaran los casos más genéricos, y por último, ```match``` debe cubrir todos los casos posibles o habrá un error de compilación.
+
+
+
+## Errores Recuperables
+
+Muchos errores que tenemos en nuestro código son errores que permiten que el programa siga ejecutandose.
+
+Hay que recordar el enum ```Result``` con sus variantes ```Ok``` y ```Err``` que ya aprendímos [aquí](https://github.com/FabrizioJordan/guess-and-learn?tab=readme-ov-file)
+
+Vamos a seguir usando esos ejemplos para hablar de otras cosas.
+
+
+```
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+```T``` y ```E``` son parámetros de tipo genéricos, cuando el resultado de ```Result``` es exitoso entonces se devuelve ```Ok``` y cuando el resultado es un error lo devuleto es ```Err```.
+
+Junto con ```Err``` viene el tipo del error, el cual se representa con ```E```, mientras que en caso de éxito y la devolución de ```Ok``` viene el valor devuelto, el cual se representa con ```T```.
+
+
+
+
