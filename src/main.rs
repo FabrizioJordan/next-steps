@@ -40,3 +40,23 @@ fn main() {
         }
     }
 }
+
+
+/* 
+fn if_let(){
+
+    // sin if-let
+    let num: Option<u8> = Some(7);
+    match num {
+        Some(7) => println!("Ese es mi número de la suerte"),
+        _ => {},
+    }
+
+    // con if-let
+    let num: Option<u8> = Some(7);
+    if let Some(7) = num {
+        println!("Ese es mi número de la suerte");
+    }
+}
+*/
+

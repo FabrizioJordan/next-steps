@@ -147,4 +147,41 @@ Junto con ```Err``` viene el tipo del error, el cual se representa con ```E```, 
 
 
 
+## If-let
+
+
+En el libro oficial de Rust nos comparten una tal vez buena explicación de ```if-let```:
+
+Existe una manera cómoda de probar si un valor se ajusta a un sólo patrón.
+
+Acá te dejo un ejemplo con ```match```, donde se le pasa un valor de tipo ```Option<u8>```.
+
+Si el valor es 7 entonces ejecutará un mensaje, sino entonces no hará nada.
+
+```
+let num: Option<u8> = Some(7);
+match num {
+    Some(7) => println!("Ese es mi número de la suerte"),
+    _ => {},
+}
+```
+
+¿Porqué no se usa ```none``` y sí ```_```?
+
+Esto se debe a que se busca ignorar todos los valores distintos de "7" sin importar nada.
+
+Por eso se usa el patrón comodín ```_```.
+
+Ahora le vamos a agregar el operador ```if-let```:
+
+```
+let num: Option<u8> = Some(7);
+if let Some(7) = num {
+    println!("Ese es mi número de la suerte");
+}
+```
+
+```if-let``` compara un patrón con una expresión, si los dos coinciden entonces se ejecuta el *if*.
+
+Este operador nos sirve cuando es una sola coincidencia la que buscamos de un patrón, a diferencia de ```match``` que nos sirve para varias coincidencias.
 
