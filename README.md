@@ -185,3 +185,89 @@ if let Some(7) = num {
 
 Este operador nos sirve cuando es una sola coincidencia la que buscamos de un patrón, a diferencia de ```match``` que nos sirve para varias coincidencias.
 
+
+## Conociendo ```unwrap``` y ```expect```
+
+Con el método ```unwrap``` uno puede intentar conseguir el valor interno de un tipo ```Option``` directamente. 
+
+Pero, este método emitirá una alerta de pánico si la variante es ```None```. Se tiene que usar con precaución.
+
+```
+// ejemplo 1
+let regalo = Some("camionsito");
+assert_eq!(regalo.unwrap(), "camionsito"); // funciona bien
+    
+let regalo_vacio: Option<&str> = None;
+assert_eq!(regalo_vacio.unwrap(), "camionsito"); // se produce un panic
+```
+
+También se puede usar ```expect```, pero este si permite emitir un mensaje de panico personalizado.
+
+```
+// ejemplo 2
+let a = Some("valor");
+assert_eq!(a.expect("las frutas son buenas"), "valor"); // funciona bien
+
+let b: Option<&str> = None;
+b.expect("las frutas son buenas"); // produce un panic con el mensaje "las frutas son buenas"
+```
+
+Acá te dejo un ejemplo con las informaciones usadas en la sección  ```if-let```.
+
+```
+// ejemplo 3
+// utilizando código parecido al de if-let
+let num: Option<u8> = Some(7);
+//let num: Option<u8> = None;
+
+// unwrap() desempaqueta un Some y devuelve el valor
+// si es None, se produce un panic!
+println!("Mi número de la suerte es {}", num.unwrap());
+```
+
+<br>
+
+***Estos ejemplos muestran lo que no es recomendable utilizar*, debido a que no se están manejado los errores.**
+
+Acá te dejo algunas mejores prácticas.
+
+Usar la coincidencia de patrones y administre el caso ```None``` explícitamente, cómo usar ```match```.
+
+Llamar a métodos parecidos, que no emitan alertas de pánico, como ```unwrap_or```, que devuelve un valor predeterminado si la variante es ```None``` o el valor interno si la variante es ```Some(value)```.
+
+También existe ```unwrap_or_else```.
+
+Entonces ```unwrap_or``` se usa cuando el valor predeterminado es barato de calcular y ```unwrap_or_else``` cuando el cálculo del valor predeterminado es costoso o implica lógica adicional.
+
+Acá hay algunos ejemplos y sus explicaciones usando ```unwrap_or```:
+
+```
+assert_eq!(Some("perro").unwrap_or("gato"), "perro");
+assert_eq!(None.unwrap_or("gato"), "gato");
+```
+
+Básicamente se está verificando el valor de dentro del ```Option```, el cual estamos creando al usar ```Some```.
+ 
+Hay que entender que usamos esto solo para el ejemplo.
+
+Entonces, se crea el ```Option``` con su valor "perro" y se maneja el error con ```.unwrap_or("gato")```, que nos deja el valor "gato" si es que la aserción es errónea. Con "aserción" nos referimos a una verificación de si es verdadera una parte de un código.
+
+Por ende, lo que hace ```.unwrap_or("gato")``` es dejarnos un valor predeterminado ante cualquier error.
+
+Luego viene el último código:
+```
+assert_eq!(Some...unwrap_or... , "perro")
+```
+
+El cual hace la verifiación de la aserción.
+
+Osea que, primero creamos el ```Option``` con su valor, luego manejamos todo ante el posible error permitiendo al programa designar un valor predeterminado y por último verificamos que el valor dentro de ```Option``` sea el del "patrón".
+
+Todo esto es pensando en que el valor y el patrón pueden llegar a ser iguales, pero si queremos que siempre surja un error entonces usamos la segunda línea.
+
+```
+assert_eq!(None.unwrap_or("gato"), "gato");
+```
+
+Se crea un ```Option``` sin ningún valor, el valor predeterminado que añade ```unwrap_or``` es "gato" y cómo el valor inicial es inexistente, entonces la aserción dará error al ser comparado el valor inicial con el "gato" final. Y al tener un error, el valor predeterminado "gato" es el valor devuelto.
+

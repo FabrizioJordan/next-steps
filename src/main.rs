@@ -60,3 +60,36 @@ fn if_let(){
 }
 */
 
+fn unwrap(){
+    // ejemplo 1
+    let regalo = Some("camionsito");
+    assert_eq!(regalo.unwrap(), "camionsito"); // funciona bien
+    
+    let regalo_vacio: Option<&str> = None;
+    //assert_eq!(regalo_vacio.unwrap(), "camionsito"); // se produce un panic
+
+
+    // ejemplo 2
+    let a = Some("valor");
+    assert_eq!(a.expect("las frutas son buenas"), "valor"); // funciona bien
+
+    let b: Option<&str> = None;
+    //b.expect("las frutas son buenas"); // produce un panic con el mensaje "las frutas son buenas"
+
+    // ejemplo 3
+    // utilizando código parecido al de if-let
+    let num: Option<u8> = Some(7);
+    //let num: Option<u8> = None; // descomentar para probar el panic
+
+    // unwrap() desempaqueta un Some y devuelve el valor
+    // si es None, se produce un panic!
+    println!("Mi número de la suerte es {}", num.unwrap());
+
+
+    // esos ejemplos muestran algunas malas prácticas, lo mejor sería manejar los errores
+    // no se recomiendan debido a esa alerta de panico que pueden generar
+    
+    // recomendados
+    assert_eq!(Some("perro").unwrap_or("gato"), "perro");
+    assert_eq!(None.unwrap_or("gato"), "gato");
+}
