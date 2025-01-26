@@ -271,3 +271,11 @@ assert_eq!(None.unwrap_or("gato"), "gato");
 
 Se crea un ```Option``` sin ningún valor, el valor predeterminado que añade ```unwrap_or``` es "gato" y cómo el valor inicial es inexistente, entonces la aserción dará error al ser comparado el valor inicial con el "gato" final. Y al tener un error, el valor predeterminado "gato" es el valor devuelto.
 
+
+## Ejemplos y prácticas de uso
+
+Ahora vamos a hacer dos ejemplos de uso.
+
+Te voy a dejar dos códigos y vas a tener que implementarle lo pedido a cada uno. Al final de todo te dejo las respuestas.
+
+### Práctica 1 

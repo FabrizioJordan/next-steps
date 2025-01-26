@@ -107,25 +107,12 @@ fn unwrap(){
 
 
 // ejemplo 1
-enum Opcion{
-    Tiene,
-    NoTiene
-}
-
-impl fmt::Display for Opcion {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match *self {
-            Opcion::Tiene => write!(f, "tiene"),
-            Opcion::NoTiene => write!(f, "no tiene"),
-        }
-    }
-}
 
 struct Casa{
     direccion: String,
     habitaciones: u8,
-    garaje: Opcion,
-    piscina: Opcion
+    garaje: bool,
+    piscina: bool
 }
 
 fn crea_casa(casa: &Casa) -> String {
@@ -142,14 +129,12 @@ fn crea_casa(casa: &Casa) -> String {
     descripcion.push_str(&casa.habitaciones.to_string());
     descripcion.push_str(" habitaciones");
 
-    descripcion.push_str(", que ");
+    descripcion.push_str(", ¿tiene garaje? : ");
     descripcion.push_str(&casa.garaje.to_string());
-    descripcion.push_str(" garaje");
 
 
-    descripcion.push_str(" y ");
+    descripcion.push_str(" y, ¿tiene pisina? : ");
     descripcion.push_str(&casa.piscina.to_string());
-    descripcion.push_str(" piscina");
 
     descripcion
 }
@@ -158,21 +143,20 @@ fn creador_de_casas() {
     let casa1 = Casa {
         direccion: String::from("Calle 123"),
         habitaciones: 3,
-        garaje: Opcion::Tiene,
-        piscina: Opcion::NoTiene,
+        garaje: true,
+        piscina: false
     };
 
     let casa2 = Casa {
         direccion: String::from("Calle 456"),
         habitaciones: 1,
-        garaje: Opcion::NoTiene,
-        piscina: Opcion::NoTiene
+        garaje: false,
+        piscina: false
     };
 
     println!("{}", crea_casa(&casa1));
     println!("{}", crea_casa(&casa2));
     println!("");
-
 }
 
 ////
