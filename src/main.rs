@@ -1,3 +1,5 @@
+use std::fmt;
+
 fn main() {
     //println!("Using panic!");
     //panic!("PAAANIC")
@@ -29,6 +31,7 @@ fn main() {
     */
 
 
+    /* 
     // se cambia un poco los valores
     // ahora se usa match con una coincidencia exacta 
     let colores = vec!["magenta", "violeta", "rosa", "purpura", "naranja"];
@@ -39,6 +42,10 @@ fn main() {
             None => println!("No hay colores en el universo! :("),
         }
     }
+    */
+
+    creador_de_casas();
+    transformers();
 }
 
 
@@ -60,6 +67,7 @@ fn if_let(){
 }
 */
 
+/*
 fn unwrap(){
     // ejemplo 1
     let regalo = Some("camionsito");
@@ -92,4 +100,179 @@ fn unwrap(){
     // recomendados
     assert_eq!(Some("perro").unwrap_or("gato"), "perro");
     assert_eq!(None.unwrap_or("gato"), "gato");
+}
+*/
+
+// ejemplos de uso
+
+
+// ejemplo 1
+enum Opcion{
+    Tiene,
+    NoTiene
+}
+
+impl fmt::Display for Opcion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Opcion::Tiene => write!(f, "tiene"),
+            Opcion::NoTiene => write!(f, "no tiene"),
+        }
+    }
+}
+
+struct Casa{
+    direccion: String,
+    habitaciones: u8,
+    garaje: Opcion,
+    piscina: Opcion
+}
+
+fn crea_casa(casa: &Casa) -> String {
+
+    let mut descripcion = String::new();
+    descripcion.push_str("
+    ");
+    
+    descripcion.push_str("Una casa en ");
+    descripcion.push_str(&casa.direccion);
+    
+    descripcion.push_str(" con ");
+    
+    descripcion.push_str(&casa.habitaciones.to_string());
+    descripcion.push_str(" habitaciones");
+
+    descripcion.push_str(", que ");
+    descripcion.push_str(&casa.garaje.to_string());
+    descripcion.push_str(" garaje");
+
+
+    descripcion.push_str(" y ");
+    descripcion.push_str(&casa.piscina.to_string());
+    descripcion.push_str(" piscina");
+
+    descripcion
+}
+
+fn creador_de_casas() {
+    let casa1 = Casa {
+        direccion: String::from("Calle 123"),
+        habitaciones: 3,
+        garaje: Opcion::Tiene,
+        piscina: Opcion::NoTiene,
+    };
+
+    let casa2 = Casa {
+        direccion: String::from("Calle 456"),
+        habitaciones: 1,
+        garaje: Opcion::NoTiene,
+        piscina: Opcion::NoTiene
+    };
+
+    println!("{}", crea_casa(&casa1));
+    println!("{}", crea_casa(&casa2));
+    println!("");
+
+}
+
+////
+
+// ejemplo 2
+enum Bando{
+    Decepticons,
+    Autobots
+}
+
+enum Amenaza{
+    Media,
+    Alta,
+    DestruccionMasiva
+}
+
+impl fmt::Display for Bando {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Bando::Decepticons => write!(f, "Decepticons"),
+            Bando::Autobots => write!(f, "Autobots"),
+        }
+    }
+}
+
+impl fmt::Display for Amenaza {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Amenaza::Media => write!(f, "Media"),
+            Amenaza::Alta => write!(f, "Alta"),
+            Amenaza::DestruccionMasiva => write!(f, "Destrucción Masiva"),
+        }
+    }
+}
+
+struct Transformer {
+    nombre: Option<String>,
+    rango: u8,
+    bando: Bando,
+    amenaza: Amenaza
+}
+
+fn meet_the_transformers(transformer: &Transformer) -> String {
+    let mut description = String::new();
+    description.push_str("
+    ");
+
+    if let Some(name) = &transformer.nombre {
+        description.push_str(name);
+    } else {
+        description.push_str("Unknown name");
+    }
+
+    description.push_str(" is a rank ");
+
+    description.push_str(&transformer.rango.to_string());
+
+    description.push_str(" and is part of the ");
+    description.push_str(&transformer.bando.to_string());
+    description.push_str(" faction.");
+
+    description.push_str(" The threat level is ");
+    description.push_str(&transformer.amenaza.to_string());
+
+    description
+}
+
+
+fn transformers() {
+    let optimus = Transformer {
+        nombre: Some(String::from("Optimus Prime")),
+        rango: 10,
+        bando: Bando::Autobots,
+        amenaza: Amenaza::DestruccionMasiva,
+    };
+
+    let megatron = Transformer {
+        nombre: Some(String::from("Megatron")),
+        rango: 10,
+        bando: Bando::Decepticons,
+        amenaza: Amenaza::DestruccionMasiva,
+    };
+
+    let bumblebee = Transformer {
+        nombre: Some(String::from("Bumblebee")),
+        rango: 7,
+        bando: Bando::Autobots,
+        amenaza: Amenaza::Media,
+    };
+
+    let unknown = Transformer {
+        nombre: None,
+        rango: 0,
+        bando: Bando::Decepticons,
+        amenaza: Amenaza::Alta,
+    };
+
+    println!("{}", meet_the_transformers(&optimus));
+    println!("{}", meet_the_transformers(&megatron));
+    println!("{}", meet_the_transformers(&bumblebee));
+    println!("{}", meet_the_transformers(&unknown));
+    println!("");
 }
